@@ -1,0 +1,77 @@
+<head>
+        <%= stylesheet_link_tag "index"%>
+        <%= stylesheet_link_tag "show"%>
+        <script type="module">
+            const genres = document.querySelector('#genres')
+            const lists = document.querySelector('#lists')
+            const nav = document.querySelector('.no_nav')
+            const navList = document.querySelector('.no_nav-list')
+            genres.addEventListener('click', ()=> nav.className = nav.className == 'no_nav' ? 'with_nav' : 'no_nav')
+            lists.addEventListener('click', ()=> navList.className = navList.className == 'no_nav-list' ? 'with_nav' : 'no_nav-list')
+        </script>
+</head>
+
+<div id='show'>
+        <div class='header-show'>
+        <div id='lists'>
+        <p>Lists</p>
+        <nav class='no_nav-list'>
+            <% @data[:lists].each do |genre| %>
+            <a href="/movies/lists/<%= genre%>"><li><%= genre %></li></a>
+            <% end %>
+        </nav>
+        </div>
+        <div id='genres'>
+            <p>Genres</p>
+            <nav class='no_nav'>
+                <% @data[:gen].each do |genre| %>
+                <a href="/movies/genre/<%= genre%>"><li><%= genre %></li></a>
+                <% end %>
+            </nav>
+        </div>
+        <%link_to '/movies'%> <h1 id='index-title'><a href="/movies" id='header-link'>TV Ratings</a></h1>
+        <form action="/movies/search" method="get" >
+            <button type="submit"><%= image_tag("search.png", id: 'search-logo', alt: 'search') %></button><input type="text" name="query" id="search-input" placeholder="Search">
+        </form>
+    </div>
+    <div id='show-title'>
+        <img src="<%= @data[:image] %>" alt="<%= @data[:title]%>" id='show-image'>
+  <div id='show-title-right'>     
+    <div id='show-title-text'>
+            <p class='title-text'><%= @data[:title] %></p>
+            <p id='show-plot'><%= @data[:plot] %></p>
+        </div>
+        <div id='show-info'>
+            <p><%= @data[:year] %></p>
+            <div id='show-rating'><svg id='index-star' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg><p><%= @data[:rating] %></p></div>
+            <a href="/movies/genre/<%= @data[:genre]%>"><p><%= @data[:genre] %></p></a>
+            <% if @data[:is_tv] == true %>
+                <p><%= @data[:episodes] %> Episodes</p>
+            <% end %>
+        </div>
+        </div>
+        <div id=bottom-info>
+        <div id='cast'>
+                <% unless @data[:cast].empty? %>
+                    <% @data[:cast].each do |actor|
+                        if actor != nil %>
+                        <div id='actor'>
+                        <%= image_tag(actor[:pic], id: 'actor-pic', alt: actor[:name]) %>
+                        <p id='small-text'><%= actor[:name] %></p></div>
+                        <% end
+                    end
+                end %>
+        </div>
+        <div id='available'>
+        <% unless @data[:availability].empty? %>
+            <% p @data[:availability] %>
+            <% @data[:availability].each do |app| %>
+                <% p app %>
+            <a target="_blank" href=<%= app[:link]%>> <%= image_tag("#{app[:app]}.png", id: 'app-logo', alt: app[:app]) %></a>
+            <% end %>
+        <% end %>
+        </div>
+        </div>
+        </div> 
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<head>
+    <%= stylesheet_link_tag "index"%>
+        <script type="module">
+            const genres = document.querySelector('#genres')
+            const nav = document.querySelector('.no_nav')
+            const navList = document.querySelector('.no_nav-list')
+            genres.addEventListener('click', ()=> nav.className = nav.className == 'no_nav' ? 'with_nav' : 'no_nav')
+            lists.addEventListener('click', ()=> navList.className = navList.className == 'no_nav-list' ? 'with_nav' : 'no_nav-list')
+        </script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <style>
+            .header {margin-bottom:10px;}
+            #pages {margin-bottom:10px}
+        </style>
+</head>
+<div id='index'>
+     <%= render partial: 'header' %>
+    <div id='pages'>
+    <%= params[:list] %>
+    </div>
+    <div id='index-movies'>
+        <% @list.each do |m| %>
+        <a href= "/movies/show/<%=m[:id]%>">
+            <div class='index-movie-card'>
+            <img src="<%= m[:image] %>" alt=" <%= m[:caption] %>">
+            <div id='index-subtext'>
+                <p class='small-text'><%= m[:year] %></p>
+                <div id='index-rating'>
+                    <svg id='index-star' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>star</title><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg>
+                    <p class='small-text'><%= m[:rating] %></p>
+                </div>
+            </div>
+        </div>
+        </a>
+        <% end %>
+    </div>
+</div>

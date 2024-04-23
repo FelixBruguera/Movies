@@ -1,0 +1,24 @@
+    <div class='header'>
+        <div id='lists'>
+        <p>Lists</p>
+        <nav class='no_nav-list'>
+            <% lists = @data[0].nil? ? @data[:lists] : @data[0][:lists]%>
+            <% lists.each do |genre| %>
+            <a href="/movies/lists/<%= genre%>"><li><%= genre %></li></a>
+            <% end %>
+        </nav>
+        </div>
+        <div id='genres'>
+            <p>Genres</p>
+            <nav class='no_nav'>
+                <% genreList = @data[0].nil? ? @data[:gen] : @data[0][:gen]%>
+                <% genreList.each do |genre| %>
+                <a href="/movies/genre/<%= genre%>"><li><%= genre %></li></a>
+                <% end %>
+            </nav>
+        </div>
+        <h1 id='index-title'><a href="/movies">TV Ratings</a></h1>
+        <form action="/movies/search" method="get" >
+            <button type="submit"><%= image_tag("search.png", id: 'search-logo', alt: 'search')%></button><input type="text" name="query" id="search-input" placeholder="Search">
+        </form>
+    </div>
